@@ -80,21 +80,21 @@ public final class BlockListener implements Listener {
     private int prevSize = ScriptKey.size();
     private ScriptKey[] tempKeys = ScriptKey.values();
 
-    @EventHandler(priority = EventPriority.HIGH)
-    public void onBlockPhysicsEvent(BlockPhysicsEvent event) {
-        var block = event.getBlock();
-        if (MC_1_19) {
-            call(block);
-            relative(block, UP);
-            relative(block, DOWN);
-            relative(block, NORTH);
-            relative(block, SOUTH);
-            relative(block, EAST);
-            relative(block, WEST);
-        } else {
-            search(block);
-        }
-    }
+//    @EventHandler(priority = EventPriority.HIGH)
+//    public void onBlockPhysicsEvent(BlockPhysicsEvent event) {
+//        var block = event.getBlock();
+//        if (MC_1_19) {
+//            call(block);
+//            relative(block, UP);
+//            relative(block, DOWN);
+//            relative(block, NORTH);
+//            relative(block, SOUTH);
+//            relative(block, EAST);
+//            relative(block, WEST);
+//        } else {
+//            search(block);
+//        }
+//    }
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onBlockPlace(BlockPlaceEvent event) {
@@ -112,17 +112,17 @@ public final class BlockListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGH)
-    public void onBlockPistonRetract(BlockPistonRetractEvent event) {
-        if (MC_1_19) {
-            final var block = event.getBlock();
-            final var blocks = event.getBlocks();
-            ScriptBlock.getScheduler().run(() -> {
-                search(block);
-                blocks.forEach(this::search);
-            });
-        }
-    }
+//    @EventHandler(priority = EventPriority.HIGH)
+//    public void onBlockPistonRetract(BlockPistonRetractEvent event) {
+//        if (MC_1_19) {
+//            final var block = event.getBlock();
+//            final var blocks = event.getBlocks();
+//            ScriptBlock.getScheduler().run(() -> {
+//                search(block);
+//                blocks.forEach(this::search);
+//            });
+//        }
+//    }
 
     private void relative(@NotNull Block block, @NotNull BlockFace face) {
         block = block.getRelative(face);
