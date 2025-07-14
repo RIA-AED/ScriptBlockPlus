@@ -85,39 +85,39 @@ public final class BlockListener implements Listener {
         this.poweredCache = new Object2LongOpenHashMap<>(16, 0.5F);
         this.repeatTasks = new Object2ObjectOpenHashMap<>();
         poweredCache.defaultReturnValue(-1);
-        schedulePoweredCacheCleanup();
-        scheduleCheckedBlocksCleanup();
+        // schedulePoweredCacheCleanup();
+        // scheduleCheckedBlocksCleanup();
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onBlockPhysicsEvent(BlockPhysicsEvent event) {
-        if (MC_1_19) {
-            deepScanBlocks(event.getBlock());
-        } else {
-            scanBlocks(event.getBlock());
-        }
+        // if (MC_1_19) {
+        //     deepScanBlocks(event.getBlock());
+        // } else {
+        //     scanBlocks(event.getBlock());
+        // }
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onBlockPlace(BlockPlaceEvent event) {
-        if (MC_1_19) {
-            scanBlocks(event.getBlock());
-        }
+        // if (MC_1_19) {
+        //     scanBlocks(event.getBlock());
+        // }
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onBlockBreak(BlockBreakEvent event) {
-        if (MC_1_19) {
-            scanBlocks(event.getBlock());
-        }
+        // if (MC_1_19) {
+        //     scanBlocks(event.getBlock());
+        // }
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onBlockPistonRetract(BlockPistonRetractEvent event) {
-        if (MC_1_19) {
-            scanBlocks(event.getBlock());
-            for (var block : event.getBlocks()) scanBlocks(block);
-        }
+        // if (MC_1_19) {
+        //     scanBlocks(event.getBlock());
+        //     for (var block : event.getBlocks()) scanBlocks(block);
+        // }
     }
 
     private void scanBlocks(@NotNull Block block) {
