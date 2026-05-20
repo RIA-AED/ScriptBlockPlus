@@ -106,6 +106,7 @@ public abstract class BaseJson<E extends BaseElement> extends SubElementMap<E> {
     private String name;
     private File file;
     private File parent;
+    private boolean fileExists;
     private Status status;
     private JsonTag jsonTag;
     private Int2ObjectMap<E> elementMap;
@@ -138,6 +139,7 @@ public abstract class BaseJson<E extends BaseElement> extends SubElementMap<E> {
         }
         this.name = name;
         this.file = getJsonFile(name);
+        this.fileExists = file.exists();
         reload();
 
         // キャッシュが保存できる状態なら保存する(データの相違を起こさないため)
@@ -170,6 +172,7 @@ public abstract class BaseJson<E extends BaseElement> extends SubElementMap<E> {
             this.name = baseJson.name;
             this.file = baseJson.file;
             this.parent = baseJson.parent;
+            this.fileExists = baseJson.fileExists;
             this.status = baseJson.status;
             this.elementMap = baseJson.elementMap;
             this.subElementMap = baseJson.subElementMap;
@@ -346,7 +349,7 @@ public abstract class BaseJson<E extends BaseElement> extends SubElementMap<E> {
      * @return {@code boolean} - ファイルが存在する場合は{@code true}
      */
     public final boolean exists() {
-        return file.exists();
+        return fileExists;
     }
 
     /**
@@ -354,7 +357,7 @@ public abstract class BaseJson<E extends BaseElement> extends SubElementMap<E> {
      * @return {@code boolean} - 削除に成功した場合は{@code true}
      */
     public final boolean deleteFile() {
-        if (!file.exists()) {
+        if (!fileExists) {
             return false;
         }
         try {
@@ -364,6 +367,7 @@ public abstract class BaseJson<E extends BaseElement> extends SubElementMap<E> {
             }
         } finally {
             file.delete();
+            fileExists = false;
         }
         return true;
     }
@@ -382,6 +386,7 @@ public abstract class BaseJson<E extends BaseElement> extends SubElementMap<E> {
                 writer.setIndent(jsonTag.indent());
             }
             GSON_HOLDER.getGson().toJson(elements, getCollectionType(), writer);
+            fileExists = true;
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         } finally {
@@ -422,7 +427,7 @@ public abstract class BaseJson<E extends BaseElement> extends SubElementMap<E> {
      */
     @Nullable
     private List<E> loadJson() throws IOException, ClassNotFoundException {
-        if (!file.exists()) {
+        if (!fileExists) {
             return null;
         }
         var parent = getParentFile();
