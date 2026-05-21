@@ -54,8 +54,22 @@ public class Version implements Comparable<Version> {
         if (dot1 < 0) {
             throw new IllegalArgumentException("Invalid Version: " + version);
         }
+        int part3End = version.length();
+        if (dot2 >= 0) {
+            part3End = dot2 + 1;
+            while (part3End < version.length() && Character.isDigit(version.charAt(part3End))) {
+                part3End++;
+            }
+            if (part3End == dot2 + 1) {
+                throw new IllegalArgumentException("Invalid Version: " + version);
+            }
+            if (part3End < version.length()) {
+                var additionalQualifier = version.substring(part3End + (version.charAt(part3End) == '.' ? 1 : 0));
+                qualifier = isEmpty(qualifier) ? additionalQualifier : additionalQualifier + "-" + qualifier;
+            }
+        }
         int part1 = parseInt(version, 0, dot1, 10), part2 = parseInt(version, dot1 + 1, dot2 < 0 ? version.length() : dot2, 10);
-        return of(part1, part2, dot2 >= 0 ? parseInt(version, dot2 + 1, version.length(), 10) : 0, qualifier);
+        return of(part1, part2, dot2 >= 0 ? parseInt(version, dot2 + 1, part3End, 10) : 0, qualifier);
     }
 
     @NotNull
