@@ -46,12 +46,7 @@ public enum ActionKey {
     /**
      * スクリプトのネームタグ
      */
-    NAMETAG("nametag"),
-
-    /**
-     * セレクターの設定
-     */
-    REDSTONE("redstone");
+    NAMETAG("nametag");
 
     private final String name;
 

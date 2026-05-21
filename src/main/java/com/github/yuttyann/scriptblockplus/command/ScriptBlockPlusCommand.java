@@ -24,8 +24,6 @@ import com.github.yuttyann.scriptblockplus.command.subcommand.ScriptCommand;
 import com.github.yuttyann.scriptblockplus.command.subcommand.SelectorCommand;
 import com.github.yuttyann.scriptblockplus.command.subcommand.ToolCommand;
 import com.github.yuttyann.scriptblockplus.enums.Permission;
-import com.github.yuttyann.scriptblockplus.enums.splittype.Filter;
-import com.github.yuttyann.scriptblockplus.enums.splittype.Repeat;
 import com.github.yuttyann.scriptblockplus.file.config.SBConfig;
 import com.github.yuttyann.scriptblockplus.file.json.derived.BlockScriptJson;
 import com.github.yuttyann.scriptblockplus.manager.OptionManager;
@@ -33,7 +31,6 @@ import com.github.yuttyann.scriptblockplus.script.ScriptKey;
 import com.github.yuttyann.scriptblockplus.script.option.OptionTag;
 import com.github.yuttyann.scriptblockplus.utils.*;
 import com.github.yuttyann.scriptblockplus.utils.raytrace.RayTrace;
-import com.google.common.collect.Lists;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -117,17 +114,9 @@ public final class ScriptBlockPlusCommand extends BaseCommand {
                 var optionHelp = SBConfig.OPTION_HELP.getValue();
                 var description = (Function<OptionTag, String>) o -> optionHelp ? o.description() : "";
                 StreamUtils.fForEach(answers, s -> s.syntax().startsWith(prefix), o -> list.add(o.syntax() + description.apply(o)));
-            } else if (compare(1, "redstone")) {
-                if (range(3, 5)) {
-                    var prefix = args(length() - 1).toLowerCase(Locale.ROOT);
-                    var answers = Lists.newArrayList("@a", "@e", "@p", "@r");
-                    StreamUtils.forEach(Repeat.values(), f -> answers.add(Repeat.getPrefix() + f.getSyntax() + "}"));
-                    StreamUtils.forEach(Filter.values(), f -> answers.add(Filter.getPrefix() + f.getSyntax() + "}"));
-                    StreamUtils.fForEach(answers, s -> s.startsWith(prefix), list::add);
-                }
             } else if (range(2)) {
                 var prefix = args(1).toLowerCase(Locale.ROOT);
-                StreamUtils.fForEach(new String[] { "create", "add", "remove", "redstone", "nametag", "view", "run" }, s -> s.startsWith(prefix), list::add);
+                StreamUtils.fForEach(new String[] { "create", "add", "remove", "nametag", "view", "run" }, s -> s.startsWith(prefix), list::add);
             }
         }
     }

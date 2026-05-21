@@ -48,7 +48,7 @@ public final class BlockScript extends OneElement<BlockCoords> {
 
     public static final InstanceCreator<BlockScript> INSTANCE = t -> new BlockScript(BlockCoords.ZERO);
 
-    public static final String SELECTOR = "selector", NAMETAG ="nametag", AMOUNT = "amount";
+    public static final String NAMETAG ="nametag", AMOUNT = "amount";
 
     @SerializedName("blockcoords")
     private final BlockCoords blockCoords;
@@ -61,9 +61,6 @@ public final class BlockScript extends OneElement<BlockCoords> {
 
     @SerializedName("lastedit")
     private String lastedit;
-
-    @SerializedName("selector")
-    private String selector;
 
     @SerializedName("nametag")
     private String nameTag;

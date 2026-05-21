@@ -456,8 +456,6 @@ public enum NetMinecraft implements SimpleReflection {
     WORLD_LEVEL_PATHFINDER(WORLD_LEVEL, "pathfinder"),
     /** {@code net.minecraft.world.level.portal} */
     WORLD_LEVEL_PORTAL(WORLD_LEVEL, "portal"),
-    /** {@code net.minecraft.world.level.redstone} */
-    WORLD_LEVEL_REDSTONE(WORLD_LEVEL, "redstone"),
     /** {@code net.minecraft.world.level.saveddata} */
     WORLD_LEVEL_SAVEDDATA(WORLD_LEVEL, "saveddata"),
     /** {@code net.minecraft.world.level.saveddata.maps} */

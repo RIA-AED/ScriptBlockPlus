@@ -85,7 +85,6 @@ public final class SBConfig {
     public static final ConfigKey<String> GUI_SETTING_EXECUTE = stringKey("CustomGUI.Item.SettingGUI.Execute", "");
     public static final ConfigKey<String> GUI_SETTING_TELEPORT = stringKey("CustomGUI.Item.SettingGUI.Teleport", "");
     public static final ConfigKey<String> GUI_SETTING_INFO = stringKey("CustomGUI.Item.SettingGUI.Info", "");
-    public static final ConfigKey<String> GUI_SETTING_REDSTONE = stringKey("CustomGUI.Item.SettingGUI.Redstone", "");
     public static final ConfigKey<String> GUI_SETTING_SCRIPT = stringKey("CustomGUI.Item.SettingGUI.Script", "");
     public static final ConfigKey<String> GUI_SETTING_NAMETAG = stringKey("CustomGUI.Item.SettingGUI.NameTag", "");
 
@@ -99,7 +98,6 @@ public final class SBConfig {
     public static final ConfigKey<String> REMOVE_COMMAND = stringKey("RemoveCommandMessage", "");
     public static final ConfigKey<String> VIEW_COMMAND = stringKey("ViewCommandMessage", "");
     public static final ConfigKey<String> NAMETAG_COMMAND = stringKey("NameTagCommandMessage", "");
-    public static final ConfigKey<String> REDSTONE_COMMAND = stringKey("RedstoneCommandMessage", "");
     public static final ConfigKey<String> RUN_COMMAND = stringKey("RunCommandMessage", "");
     public static final ConfigKey<String> SELECTOR_PASTE_COMMAND = stringKey("SelectorPasteCommandMessage", "");
     public static final ConfigKey<String> SELECTOR_REMOVE_COMMAND = stringKey("SelectorRemoveCommandMessage", "");
@@ -200,11 +198,6 @@ public final class SBConfig {
      * Parameter: {@link ScriptKey} scriptKey
      */
     public static final ReplaceKey SCRIPT_NAMETAG = replaceKey("ScriptNameTagMessage", "", FUNCTION_SCRIPT_TYPE);
-
-    /**
-     * Parameter: {@link ScriptKey} scriptKey
-     */
-    public static final ReplaceKey SCRIPT_REDSTONE = replaceKey("ScriptRedstoneMessage", "", FUNCTION_SCRIPT_TYPE);
 
     /**
      * Parameter: {@link String} worldName, {@link String} coords

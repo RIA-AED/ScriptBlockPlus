@@ -42,7 +42,6 @@ import com.github.yuttyann.scriptblockplus.item.gui.UserWindow;
 import com.github.yuttyann.scriptblockplus.item.gui.custom.SearchGUI;
 import com.github.yuttyann.scriptblockplus.item.gui.custom.SettingGUI;
 import com.github.yuttyann.scriptblockplus.item.gui.custom.ToolBoxGUI;
-import com.github.yuttyann.scriptblockplus.listener.BlockListener;
 import com.github.yuttyann.scriptblockplus.listener.InteractListener;
 import com.github.yuttyann.scriptblockplus.listener.PlayerListener;
 import com.github.yuttyann.scriptblockplus.listener.TriggerListener;
@@ -118,7 +117,6 @@ public class ScriptBlock extends JavaPlugin {
         Bukkit.getOnlinePlayers().forEach(p -> getSBPlayer(p).setOnline(true));
 
         // リスナーの登録
-        getServer().getPluginManager().registerEvents(new BlockListener(this), this);
         getServer().getPluginManager().registerEvents(new PlayerListener(), this);
         getServer().getPluginManager().registerEvents(new InteractListener(), this);
 
