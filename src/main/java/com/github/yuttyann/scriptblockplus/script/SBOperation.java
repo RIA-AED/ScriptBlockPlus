@@ -118,20 +118,6 @@ public final class SBOperation {
         SBConfig.CONSOLE_SCRIPT_EDIT.replace(scriptKey, blockCoords).console();
     }
 
-    public void redstone(@NotNull SBPlayer sbPlayer, @NotNull BlockCoords blockCoords, @Nullable String selector) {
-        if (!scriptJson.has(blockCoords)) {
-            SBConfig.ERROR_SCRIPT_FILE_CHECK.send(sbPlayer);
-            return;
-        }
-        var blockScript = scriptJson.load(blockCoords);
-        blockScript.getAuthors().add(sbPlayer.getUniqueId());
-        blockScript.setLastEdit(new Date());
-        blockScript.setValue(BlockScript.SELECTOR, selector);
-        scriptJson.saveJson();
-        SBConfig.SCRIPT_REDSTONE.replace(scriptKey).send(sbPlayer);
-        SBConfig.CONSOLE_SCRIPT_EDIT.replace(scriptKey, blockCoords).console();
-    }
-
     @NotNull
     public static List<String> getScriptInfos(@NotNull SBPlayer sbPlayer, @NotNull ScriptKey scriptKey, @NotNull BlockScriptJson scriptJson, @NotNull BlockCoords blockCoords) {
         var info = new ArrayList<String>();

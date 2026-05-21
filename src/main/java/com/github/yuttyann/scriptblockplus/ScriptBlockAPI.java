@@ -118,15 +118,6 @@ public interface ScriptBlockAPI {
         boolean nametag(@NotNull OfflinePlayer player, @NotNull Location location, @Nullable String nametag);
     
         /**
-         * 指定した座標のスクリプトにターゲットセレクターを設定します。
-         * @param player - プレイヤー
-         * @param location - スクリプトの座標
-         * @param selector - ターゲットセレクター
-         * @return {@code boolean} - 設定に成功した場合は{@code true}
-         */
-        boolean redstone(@NotNull OfflinePlayer player, @NotNull Location location, @Nullable String selector);
-
-        /**
          * 指定した座標のスクリプトを削除します。
          * @param player - プレイヤー
          * @param location - スクリプトの座標

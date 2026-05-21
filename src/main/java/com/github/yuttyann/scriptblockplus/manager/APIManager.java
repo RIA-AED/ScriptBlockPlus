@@ -132,20 +132,6 @@ public final class APIManager implements ScriptBlockAPI {
         }
 
         @Override
-        public boolean redstone(@NotNull OfflinePlayer player, @NotNull Location location, @Nullable String selector) {
-            var blockCoords = BlockCoords.of(location);
-            if (!scriptJson.has(blockCoords)) {
-                return false;
-            }
-            var blockScript = scriptJson.load(blockCoords);
-            blockScript.getAuthors().add(player.getUniqueId());
-            blockScript.setLastEdit(new Date());
-            blockScript.setValue(BlockScript.SELECTOR, selector);
-            scriptJson.saveJson();
-            return true;
-        }
-
-        @Override
         public boolean remove(@NotNull Location location) {
             var blockCoords = BlockCoords.of(location);
             if (!scriptJson.has(blockCoords)) {

@@ -14,7 +14,6 @@ AddCommandMessage: '<scriptkey> add <options> - Add a new script to the block.'
 RemoveCommandMessage: '<scriptkey> remove - Remove the script from the block.'
 ViewCommandMessage: '<scriptkey> view - View the script for the block.'
 NameTagCommandMessage: '<scriptkey> nametag [tag] - Set a nametag for the block.'
-RedstoneCommandMessage: '<scriptkey> redstone [repeat] [filter] [selector] - Set if the script works with Redstone.'
 RunCommandMessage: '<scriptkey> run [player] <world> <x> <y> <z> - Execute the specified script.'
 SelectorPasteCommandMessage: 'selector paste [pasteonair] [overwrite] - Paste the script into the selection.'
 SelectorRemoveCommandMessage: 'selector remove - Remove the script into the selection.'
@@ -51,7 +50,6 @@ CustomGUI:
       Teleport: '&bTeleport'
       Execute: '&bExecute'
       Info: '&bInformation'
-      Redstone: '&aEdit target selector'
       Script: '&aEdit script'
       NameTag: '&aEdit nametag'
 
@@ -107,7 +105,6 @@ ScriptCreateMessage: '&aI created a script with the block "%scriptkey%".'
 ScriptAddMessage: '&aI added a script to the block "%scriptkey%".'
 ScriptRemoveMessage: '&cI removed the script in the block "%scriptkey%".'
 ScriptNameTagMessage: '&aI edited the nametag for the block "%scriptkey%".'
-ScriptRedstoneMessage: '&aI edited the target selector for the block "%scriptkey%".'
 
 # There are no placeholders
 NotSelectionMessage: '&cBlockSelector area not selected.'

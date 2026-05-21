@@ -14,7 +14,6 @@ AddCommandMessage: '<scriptkey> add <options> - 添加脚本方块'
 RemoveCommandMessage: '<scriptkey> remove - 移除脚本方块'
 ViewCommandMessage: '<scriptkey> view - 查看方块的脚本'
 NameTagCommandMessage: '<scriptkey> nametag [tag] - 设置块的名称标签'
-RedstoneCommandMessage: '<scriptkey> redstone [repeat] [filter] [selector] - 设置脚本块是否与红石一起使用'
 RunCommandMessage: '<scriptkey> run [player] <world> <x> <y> <z> - 执行脚本块'
 SelectorPasteCommandMessage: 'selector paste [pasteonair] [overwrite] - 粘贴选区内的脚本方块'
 SelectorRemoveCommandMessage: 'selector remove - 移除选区内的脚本方块'
@@ -51,7 +50,6 @@ CustomGUI:
       Teleport: '&b远距传输'
       Execute: '&b执行'
       Info: '&b信息'
-      Redstone: '&a编辑一个目标选择器'
       Script: '&a编辑一个脚本'
       NameTag: '&a编辑一个姓名标签'
 
@@ -107,7 +105,6 @@ ScriptCreateMessage: '&a我创建了一个带有"%scriptkey%"块的脚本'
 ScriptAddMessage: '&a我在"%scriptkey%"块中添加了一个脚本'
 ScriptRemoveMessage: '&c我已经删除了"%scriptkey%"块中的脚本'
 ScriptNameTagMessage: '&c我已经编辑了"%scriptkey%"区块的名称标签'
-ScriptRedstoneMessage: '&a我已经编辑了"%scriptkey%"区块的目标选择器'
 
 # 沒有佔位符
 NotSelectionMessage: '&cBlockSelector坐标范围未选择'

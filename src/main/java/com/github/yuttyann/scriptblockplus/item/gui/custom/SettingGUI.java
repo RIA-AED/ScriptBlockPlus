@@ -46,7 +46,6 @@ import com.github.yuttyann.scriptblockplus.item.gui.custom.SearchGUI.ScriptJson;
 import com.github.yuttyann.scriptblockplus.player.SBPlayer;
 import com.github.yuttyann.scriptblockplus.script.SBClipboard;
 import com.github.yuttyann.scriptblockplus.script.ScriptRead;
-import com.github.yuttyann.scriptblockplus.selector.CommandSelector;
 import com.github.yuttyann.scriptblockplus.utils.ItemUtils;
 import com.github.yuttyann.scriptblockplus.utils.StreamUtils.TriConsumer;
 import com.github.yuttyann.scriptblockplus.utils.StringUtils;
@@ -163,18 +162,6 @@ public final class SettingGUI extends CustomGUI {
         }));
 
         // AnvilGUI
-        window.setItem(SLOTS[1], new GUIItem(1, Material.REDSTONE_BLOCK, SBConfig.GUI_SETTING_REDSTONE.setColor(), null, (w, g, c) -> {
-            OPEN_ANVIL.accept(w, s -> s.blockScript.getSafeValue(BlockScript.SELECTOR).asString(null), (t, s) -> {
-                var text = ChatColor.stripColor(t);
-                if (StringUtils.isNotEmpty(text) && !CommandSelector.has(text)) {
-                    text = text.trim() + " @p";
-                }
-                s.blockScript.setLastEdit(new Date());
-                s.blockScript.setValue(BlockScript.SELECTOR, def(text, null));
-                s.scriptJson.saveJson();
-                return Response.close();
-            });
-        }));
         window.setItem(SLOTS[2], new GUIItem(1, ItemUtils.getCommandMaterial(), SBConfig.GUI_SETTING_SCRIPT.setColor(), null, (w, g, c) -> {
             if (c == ClickType.LEFT) {
                 getScriptJson(w).ifPresent(s -> w.setItem(SLOTS[2], g.setLore(selectScript(w.getSBPlayer(), s, 1))));
@@ -288,7 +275,6 @@ public final class SettingGUI extends CustomGUI {
 
     private void update(@NotNull UserWindow window, @NotNull ScriptJson scriptJson) {
         var blockScript = scriptJson.blockScript;
-        window.setItem(SLOTS[1], window.getItem(SLOTS[1]).setLore(SearchGUI.TEXT + blockScript.getSafeValue(BlockScript.SELECTOR).asString()));
         window.setItem(SLOTS[2], window.getItem(SLOTS[2]).setLore(selectScript(window.getSBPlayer(), scriptJson, 0)));
         window.setItem(SLOTS[3], window.getItem(SLOTS[3]).setLore(SearchGUI.TEXT + blockScript.getSafeValue(BlockScript.NAMETAG).asString()));
         window.setItem(SLOTS[4], window.getItem(SLOTS[4]).setEnchant(window.getSBPlayer().getSBClipboard().isPresent()));

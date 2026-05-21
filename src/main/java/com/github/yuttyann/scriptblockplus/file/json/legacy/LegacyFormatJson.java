@@ -128,7 +128,10 @@ public final class LegacyFormatJson {
                 continue;
             }
             var map = castMap(element);
-            if (setValue(map, BlockScript.SELECTOR, BlockScript.NAMETAG, BlockScript.AMOUNT)) {
+            if (removeRedstoneSelector(map)) {
+                result = true;
+            }
+            if (setValue(map, BlockScript.NAMETAG, BlockScript.AMOUNT)) {
                 result = true;
             }
             if (map.containsKey("script")) {
@@ -166,6 +169,20 @@ public final class LegacyFormatJson {
             }
             map.remove(key);
             result = true;
+        }
+        return result;
+    }
+
+    private boolean removeRedstoneSelector(@NotNull Map<String, Object> map) {
+        var result = map.remove("selector") != null;
+        var values = map.get("values");
+        if (values instanceof Map) {
+            var valueMap = castMap(values);
+            var removed = valueMap.remove("selector") != null;
+            if (removed && valueMap.isEmpty()) {
+                map.remove("values");
+            }
+            result |= removed;
         }
         return result;
     }
@@ -241,11 +258,6 @@ public final class LegacyFormatJson {
                     break;
                 case "lastedit":
                     blockScript.setLastEdit((String) value);   
-                    break;
-                case "selector":
-                    if (StringUtils.isNotEmpty((String) value)) {
-                        blockScript.setValue("selector", value);
-                    }
                     break;
                 case "amount": {
                     var amount = ((Number) value).intValue();
