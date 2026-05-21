@@ -139,7 +139,6 @@ public abstract class BaseJson<E extends BaseElement> extends SubElementMap<E> {
         }
         this.name = name;
         this.file = getJsonFile(name);
-        this.fileExists = file.exists();
         reload();
 
         // キャッシュが保存できる状態なら保存する(データの相違を起こさないため)
@@ -246,6 +245,7 @@ public abstract class BaseJson<E extends BaseElement> extends SubElementMap<E> {
      */
     public final void reload() {
         try {
+            fileExists = file.exists();
             setMap(loadJson());
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -382,11 +382,11 @@ public abstract class BaseJson<E extends BaseElement> extends SubElementMap<E> {
         }
         var elements = copyElements();
         try (var writer = new JsonWriter(FileUtils.newBufferedWriter(file))) {
+            fileExists = true;
             if (elementMap.size() < SBConfig.FORMAT_LIMIT.getValue()) {
                 writer.setIndent(jsonTag.indent());
             }
             GSON_HOLDER.getGson().toJson(elements, getCollectionType(), writer);
-            fileExists = true;
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         } finally {
