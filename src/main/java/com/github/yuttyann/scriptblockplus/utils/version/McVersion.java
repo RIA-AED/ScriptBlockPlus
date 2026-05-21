@@ -28,6 +28,11 @@ import org.jetbrains.annotations.NotNull;
 public final class McVersion extends Version {
 
     /**
+     * Minecraft 26.1.x 系列
+     */
+    public static final McVersion V_26_1_2 = v(26, 1, 2), V_26_1_1 = v(26, 1, 1), V_26_1 = v(26, 1);
+
+    /**
      * Minecraft 1.21.x 系列
      */
     public static final McVersion V_1_21_8 = v(1, 21, 8), V_1_21_7 = v(1, 21, 7), V_1_21_6 = v(1, 21, 6), V_1_21_5 = v(1, 21, 5), V_1_21_4 = v(1, 21, 4),
