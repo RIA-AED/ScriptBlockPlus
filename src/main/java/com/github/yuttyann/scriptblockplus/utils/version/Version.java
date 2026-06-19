@@ -50,6 +50,24 @@ public class Version implements Comparable<Version> {
             qualifier = version.substring(hyphen + 1);
             version = version.substring(0, hyphen);
         }
+        int length = version.length(), end = 0, dots = 0;
+        while (end < length) {
+            char c = version.charAt(end);
+            if (c >= '0' && c <= '9') {
+                end++;
+                continue;
+            }
+            if (c == '.' && dots < 2 && end + 1 < length) {
+                char next = version.charAt(end + 1);
+                if (next >= '0' && next <= '9') {
+                    dots++;
+                    end++;
+                    continue;
+                }
+            }
+            break;
+        }
+        version = version.substring(0, end);
         int dot1 = version.indexOf('.', 0), dot2 = version.indexOf('.', dot1 + 1);
         if (dot1 < 0) {
             throw new IllegalArgumentException("Invalid Version: " + version);
