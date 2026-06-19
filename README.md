@@ -1,34 +1,48 @@
-[Java25] ScriptBlockPlus [MC1.9-26.1.2] [![](https://jitpack.io/v/yuttyann/ScriptBlockPlus.svg)](https://jitpack.io/#yuttyann/ScriptBlockPlus)
-==========
+# ScriptBlockPlus
 
-概要
+[English](README.md) | [日本語](README-ja.md) | [简体中文](README-zh.md)
+
+RIA-AED/ScriptBlockPlus is a fork of yuttyann/ScriptBlockPlus, which itself is a fork of ScriptBlock.
+This branch is maintained by the RIA server.
+
+This branch keeps the upstream feature set and addon integration, but:
+- removes redstone script block support entirely
+- is adapted for newer versions and currently tested on `26.1.2`
+- uses JDK 25 for builds, while runtime Java requirements remain unchanged
+- includes performance fixes and memory overflow bug fixes
+- merges the official `ScriptEntityPlus` addon into the main plugin
+
+---
+The following content is mostly from the upstream repository documentation.
+
+Overview
 -----------
-[ScriptBlock](https://dev.bukkit.org/projects/scriptblock)の機能を引き継ぎ、新機能追加や改善を施したプラグインです。
-(現在複数のプラットフォームで動作可能な後継プラグインを作成中です。)
+[ScriptBlock](https://dev.bukkit.org/projects/scriptblock) was extended with new features and improvements.
+(We are also working on a successor plugin that can run on multiple platforms.)
 
-導入
+Installation
 -----------
-[ダウンロード](https://github.com/yuttyann/FileArchive/tree/main/ScriptBlockPlus)した`ScriptBlockPlus`を、`plugins`フォルダへ保存すれば完了です。
+Place the `ScriptBlockPlus` jar into the `plugins` folder.
 
-### Java8版
-別の[リポジトリ](https://github.com/yuttyann/ScriptBlockPlus-Java8)にて、**ScriptBlockPlus**の**Java8版**を[公開](https://github.com/yuttyann/ScriptBlockPlus-Java8/releases)しています。
-古いプラットフォームのサーバーで[**Java11**](https://adoptopenjdk.net/?variant=openjdk11)が動作しない場合はご利用ください。
-但し、基本的にはサポートを行っていない事と、近いうちに更新停止することをご了承ください。
-**プラグインバージョンv2.1.2より、更新を停止いたしました。**
+### Java 8 version
+A separate [repository](https://github.com/yuttyann/ScriptBlockPlus-Java8) provides a **Java 8 version** of **ScriptBlockPlus**.
+Use it if **Java 11** does not run on older platforms.
+However, it is not actively supported in general, and updates were stopped a long time ago.
+**Updates were stopped starting from plugin version `v2.1.2`.**
 
-### 連携プラグイン
+### Integration plugins
 | Plugin | Description |
 |:---|:---|
-| [Vault](https://www.spigotmc.org/resources/vault.34315/) | 権限、経済系プラグインの機能を利用する事ができます。 |
-| [DiscordSRV](https://www.spigotmc.org/resources/discordsrv.18494/) | ディスコ―ドの機能を利用する事ができます。 |
-| [PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/) | プレースホルダの機能を拡張する事ができます。 |
+| [Vault](https://www.spigotmc.org/resources/vault.34315/) | Lets you use permission and economy plugin features. |
+| [DiscordSRV](https://www.spigotmc.org/resources/discordsrv.18494/) | Lets you use Discord-related features. |
+| [PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/) | Extends placeholder support. |
 
-### 内蔵機能
+### Built-in features
 | Feature | Description |
 |:---|:---|
-| ScriptEntityPlus | エンティティにスクリプトを設定する事ができます。 |
+| ScriptEntityPlus | Lets you assign scripts to entities. |
 
-**== 各バージョンの動作範囲 ==**
+**== Compatibility by version ==**
 | Plugin | Server | Java |
 |:---|:---|:---:|
 |**`2.4.0`**|**`1.9-26.1.2`**|**Java25**|
@@ -48,93 +62,111 @@
 |`1.4.0-1.5.0`|`1.7.2-1.13.2`|**Java8**|
 |`1.0.0-1.3.3`|`1.7.2-1.13.2`|**Java7**|
 
-**== バージョン"1.13-1.13.1"の動作について ==**
-サーバーが**Java9**以降に対応していないことが原因で、**エラーが発生する不具合が存在します。**
-プラグイン自体は正常に動作するのですが、問題が発生する可能性があるので"[**1.13.2**](https://papermc.io/legacy)"を利用してください。
-**解決方法(非推奨)**、`<Server>.jar`内の`org/objectweb/asm/ClassVisitor.class`を[改変](https://pastebin.com/UFBdKXJD)することで動作します。
+This fork has also been tested on `26.1.2`.
 
-**== プラグインの不具合について ==**
-報告される不具合の多くはデータファイルや設定ファイル系が殆んどです。
-報告される際は、一度`plugins/ScriptBlockPlus/json`内の`format.sbp`を削除して再生成を行ってください。
-また、アップデートで設定ファイルが変更されることもままあるので、再生成を推奨します。
-**(データファイル、設定ファイルの再生成や削除で解決しなかった場合は[Issue](https://github.com/yuttyann/ScriptBlockPlus/issues)で報告してください。)**
-`そもそも起動しない場合は、Javaのバージョンをチェックしてください。`
+**== About version "1.13-1.13.1" ==**
+Because the server does not support **Java 9** or later, an **error can occur**.
+The plugin itself works normally, but problems may happen, so please use "[**1.13.2**](https://papermc.io/legacy)".
+**Workaround (not recommended)**: modify [this part](https://pastebin.com/UFBdKXJD) of `org/objectweb/asm/ClassVisitor.class` inside `<Server>.jar`.
 
-対応プラットフォーム
+**== About plugin issues ==**
+Most reported issues are related to data files or configuration files.
+When reporting, delete `format.sbp` inside `plugins/ScriptBlockPlus/json` and regenerate it once.
+Also, configuration files may change during updates, so regeneration is recommended.
+**If regeneration or deletion of data/config files does not help, report the issue on [Issue](https://github.com/yuttyann/ScriptBlockPlus/issues).**
+`If the server does not start at all, check the Java version.`
+
+Supported platforms
 -----------
-**[`BukkitAPI`](https://hub.spigotmc.org/javadocs/bukkit/overview-summary.html)を実装しているのであれば**基本的に動作します。
-[**`net.minecraft.server`**](https://sodocumentation.net/ja/bukkit/topic/9576/nms)が見つからなかった場合は、**NMS依存の機能が強制的に無効**になります。
-下記は、動作確認を行ったサーバーの一覧です。
+If a platform implements **[`BukkitAPI`](https://hub.spigotmc.org/javadocs/bukkit/overview-summary.html)**, it should basically work.
+If **`net.minecraft.server`** cannot be found, **NMS-dependent features are forcibly disabled**.
+Below is a list of servers that were tested.
 | Server | Description |
 |:---|:---|
-|[Spigot](https://www.spigotmc.org/)|可もなく不可もない、一般的に採用されているサーバーです。|
-|[Paper](https://papermc.io/)|Spigotの派生サーバーで、最適化の他、詳細な設定の追加等も行われています。|
-|[Tuinity](https://ci.codemc.io/job/Spottedleaf/job/Tuinity/)|Paperの派生サーバーで、大規模なサーバー向けに最適化されています。|
-|[Yatopia](https://yatopiamc.org/)|Tuinityの派生サーバーで、様々なサーバープラットフォームの最適化パッチを適用しています。|
-|[Purpur](https://purpur.pl3x.net/)|Tuinityの派生サーバーで、様々なユニークな機能が追加されています。|
-|[Akarin](https://github.com/Akarin-project/Akarin)|Paperの派生サーバーで、パフォーマンスの向上を目的として作成されています。|
-|[Mohist](https://mohistmc.com/)|ForgeとSpigot(Paper)の両方の機能を備えています。|
-|[Magma](https://magmafoundation.org/)|ForgeとSpigot(Paper)の両方の機能を備えています。|
+|[Spigot](https://www.spigotmc.org/)|A standard server, widely used and reasonably reliable.|
+|[Paper](https://papermc.io/)|A Spigot fork with extra optimizations and more detailed configuration options.|
+|[Tuinity](https://ci.codemc.io/job/Spottedleaf/job/Tuinity/)|A Paper fork optimized for large-scale servers.|
+|[Yatopia](https://yatopiamc.org/)|A Tuinity fork that applies many platform optimization patches.|
+|[Purpur](https://purpur.pl3x.net/)|A Tuinity fork with many unique features added.|
+|[Akarin](https://github.com/Akarin-project/Akarin)|A Paper fork created with performance improvements in mind.|
+|[Mohist](https://mohistmc.com/)|Provides both Forge and Spigot(Paper) features.|
+|[Magma](https://magmafoundation.org/)|Provides both Forge and Spigot(Paper) features.|
 
 
-ダウンロード
+Download
 -----------
-| サイト | 言語 | 説明 |
+| Site | Language | Description |
 |:---|:---|:---|
-| [FileArchive](https://github.com/yuttyann/FileArchive/tree/main/ScriptBlockPlus) | `Japanese` | 作者が配布物をまとめているリポジトリです。 |
-| [SpigotMC](https://www.spigotmc.org/resources/78413/) | `English` | 作者が海外向けに配布を行うために利用しているサイトです。 |
-| [MCBBS](https://www.mcbbs.net/thread-691900-1-1.html) | `Chinese` | 有志が解説、配布を行っている中国のマインクラフトのフォーラムです。 |
+| [FileArchive](https://github.com/yuttyann/FileArchive/tree/main/ScriptBlockPlus) | `Japanese` | The repository used by the author to organize distribution files. |
+| [SpigotMC](https://www.spigotmc.org/resources/78413/) | `English` | The site used by the author to distribute to overseas users. |
+| [MCBBS](https://www.mcbbs.net/thread-691900-1-1.html) | `Chinese` | A Minecraft forum where volunteers explain and distribute the plugin in China. |
 
-リンク
+Links
 -----------
-| ページ | 説明 |
+| Page | Description |
 |:---|:---|
-| [MCPoteton](https://mcpoteton.com/mcplugin-scriptblockplus) | あらゆる機能の解説をしています。 |
+| [MCPoteton](https://mcpoteton.com/mcplugin-scriptblockplus) | Explains many of the plugin's features. |
 
-エンティティスクリプト機能
+Entity Script Feature
 -----------
-ScriptEntityPlusはScriptBlockPlusに統合されました。別途`ScriptEntityPlus`を導入する必要はありません。
-エンティティに対して通常クリック時、死亡時に実行するスクリプトを設定できます。
+ScriptEntityPlus has been merged into ScriptBlockPlus. There is no need to install `ScriptEntityPlus` separately.
+You can configure scripts that run on normal click and on death for entities.
 
-### 使い方
-基本的にはツールの**`説明文`**に従ってください。
-プレイヤーから**コマンド**`/sbp tool`を入力し**ツール**`Script Connection`を入手してください。
-対象の指定方法は**ブロックを対象とする場合は左クリック**、**エンティティを対象とする場合は右クリック**です。
+### Migrating old ScriptEntityPlus data
+If you previously used the standalone `ScriptEntityPlus` plugin, you can migrate its config and message files into the `ScriptBlockPlus` directory. (The old plugin directory does not contain script entity data.)
 
-**パーミッション**
-ツール"Script Connection"の使用: `scriptentityplus.tool.scriptconnection`
+1. Stop the server.
+2. Copy your old `plugins/ScriptEntityPlus/` files into `plugins/ScriptBlockPlus/`.
+3. Rename them to the merged plugin names if needed:
+   - `config_en.yml` -> `scriptentityplus_config_en.yml`
+   - `config_ja.yml` -> `scriptentityplus_config_ja.yml`
+   - `config_zh.yml` -> `scriptentityplus_config_zh.yml`
+   - `message_en.yml` -> `scriptentityplus_message_en.yml`
+   - `message_ja.yml` -> `scriptentityplus_message_ja.yml`
+   - `message_zh.yml` -> `scriptentityplus_message_zh.yml`
+4. Start the server.
 
-**ツールのモード**
-ツールをメインハンドに所持した状態で左クリック行うことでモードを切り替えることができます。
+Entity script data is stored under `plugins/ScriptBlockPlus/json/entityscript/`, so there is no separate `ScriptEntityPlus` data directory for that part.
+
+### How to use
+Basically, follow the tool's **`description`**.
+Enter the **command** `/sbp tool` from the player and obtain the **tool** `Script Connection`.
+The target selection method is **left click for blocks** and **right click for entities**.
+
+**Permission**
+Using the tool "Script Connection": `scriptentityplus.tool.scriptconnection`
+
+**Tool mode**
+You can switch modes by left-clicking while holding the tool in your main hand.
 
 **`NORMAL MODE`**
-エンティティをクリックした際に実行されるスクリプトを設定することができます。
+Lets you configure scripts that run when the entity is clicked.
 
 **`DEATH MODE`**
-エンティティが死亡した際に実行されるスクリプトを設定することができます。
+Lets you configure scripts that run when the entity dies.
 
-**チャットイベント**
-テキストにカーソルを合わせる、クリックを行うことで情報の表示やコマンドの実行をすることができます。
-(所謂[`tellraw`](https://minecraft-ja.gamepedia.com/%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89/tellraw)です。)
+**Chat event**
+Hovering over or clicking text lets you show information or run commands.
+(This is the so-called [`tellraw`](https://minecraft-ja.gamepedia.com/%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89/tellraw).)
 
-**`スクリプトの選択 [MAINHAND+SHIFT+LEFT_CLICK]`**
-緑色のテキストをクリックすることで、エンティティに設定したいスクリプトを選択することができます。
+**`Select a script [MAINHAND+SHIFT+LEFT_CLICK]`**
+Click the green text to select the script you want to assign to the entity.
 ![ScriptTypes](https://dl.dropboxusercontent.com/s/jvfmhrvyqvs1g50/ScriptTypes.png)
 
-**`設定されているスクリプトの表示 [OFFHAND+RIGHT_CLICK]`**
-緑色のテキストをクリックすることで、スクリプトを実行するコマンドがチャットに設定されます。
+**`Show assigned scripts [OFFHAND+RIGHT_CLICK]`**
+Click the green text to set the command that runs the script into chat.
 ![Scripts](https://dl.dropboxusercontent.com/s/tyn94f3h5x88ytz/Scripts.png)
 
-**`エンティティの設定 [OFFHAND+SHIFT+RIGHT_CLICK]`**
-橙色の`[...]`で囲まれたテキストをクリックすることで、設定の`有効`、`無効`、`表示`を行うことができます。
-また、水色のテキストにカーソルを合わせることで設定の説明が表示されます。
+**`Entity settings [OFFHAND+SHIFT+RIGHT_CLICK]`**
+Click the orange text wrapped in `[...]` to toggle settings between `enabled`, `disabled`, and `display`.
+You can also hover over the light-blue text to see the setting description.
 ![EntitySettings](https://dl.dropboxusercontent.com/s/gpjrhmilz3yxvs0/EntitySettings.png)
 
-### ファイル関係
-ファイルの管理: `ScriptBlockPlusのスクリプトの種類と座標をエンティティのUUIDを元に保存しているため、`
-`UUIDの変更(例: 額縁のアイテムを変更等)があった場合設定ファイルが残存し続けてしまうので注意してください。`
+### File handling
+File management: `Because ScriptBlockPlus stores the script type and coordinates for entities based on their UUID,`
+`be careful that configuration files may remain if the UUID changes (for example, when changing the item in an item frame).`
 
-ファイルのパス: `設定の保存先は` **`plugins/ScriptBlockPlus/json/entityscript/....`** `です。`
+File path: `The save destination for settings is` **`plugins/ScriptBlockPlus/json/entityscript/....`** `.` 
 
-ファイルの削除: `ツールでの削除またはプレイヤー以外が死亡した場合に設定ファイルが削除されます。`
-`また、エンティティのスクリプトを削除しても設定元のスクリプトには影響はありません。`
+File deletion: `When using the tool to delete, or when something other than a player dies, the configuration file is removed.`
+`Also, deleting the entity script does not affect the original configured script.`
