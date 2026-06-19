@@ -58,6 +58,7 @@ import com.github.yuttyann.scriptblockplus.utils.server.NetMinecraft;
 import com.github.yuttyann.scriptblockplus.utils.server.minecraft.Minecraft;
 import com.github.yuttyann.scriptblockplus.utils.server.minecraft.NativeAccessor;
 import com.github.yuttyann.scriptblockplus.utils.version.McVersion;
+import com.github.yuttyann.scriptentityplus.ScriptEntity;
 
 /**
  * ScriptBlockPlus ScriptBlock メインクラス
@@ -142,6 +143,7 @@ public class ScriptBlock extends JavaPlugin {
 
         // コマンドの登録
         BaseCommand.register("scriptblockplus", new ScriptBlockPlusCommand(this));
+        ScriptEntity.getInstance().onEnable();
     }
 
     @Override
@@ -153,6 +155,8 @@ public class ScriptBlock extends JavaPlugin {
         } catch (ReflectiveOperationException e) {
             e.printStackTrace();
         }
+        ScriptEntity.getInstance().onDisable();
+        com.github.yuttyann.scriptentityplus.listener.CommandListener.removeFilter();
     }
 
     /**

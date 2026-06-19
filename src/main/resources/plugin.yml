@@ -5,7 +5,6 @@ description: ${project.description}
 author: yuttyann44581
 website: ${project.url}
 api-version: 1.13
-loadbefore: [ScriptEntityPlus]
 softdepend: [Vault, ScriptBlock, DiscordSRV, PlaceholderAPI]
 
 commands:
@@ -58,6 +57,12 @@ permissions:
       scriptblockplus.tool.scriptviewer: true
       scriptblockplus.tool.scriptmanager: true
       scriptblockplus.tool.blockselector: true
+      scriptentityplus.tool.scriptconnection: true
+      scriptentityplus.*: true
+  scriptentityplus.*:
+    default: op
+    children:
+      scriptentityplus.tool.scriptconnection: true
   scriptblockplus.command.tool:
     default: false
   scriptblockplus.command.reload:
@@ -91,4 +96,6 @@ permissions:
   scriptblockplus.tool.scriptmanager:
     default: false
   scriptblockplus.tool.blockselector:
+    default: false
+  scriptentityplus.tool.scriptconnection:
     default: false

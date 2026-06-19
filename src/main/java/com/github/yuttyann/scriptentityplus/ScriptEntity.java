@@ -1,0 +1,106 @@
+/**
+ * ScriptEntityPlus - Allow you to add script to any entities.
+ * Copyright (C) 2021 yuttyann44581
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+package com.github.yuttyann.scriptentityplus;
+
+import com.github.yuttyann.scriptblockplus.ScriptBlock;
+import com.github.yuttyann.scriptblockplus.enums.CommandLog;
+import com.github.yuttyann.scriptblockplus.file.json.CacheJson;
+import com.github.yuttyann.scriptblockplus.item.ItemAction;
+import com.github.yuttyann.scriptblockplus.utils.Utils;
+import com.github.yuttyann.scriptentityplus.file.SEFiles;
+import com.github.yuttyann.scriptentityplus.item.ScriptConnection;
+import com.github.yuttyann.scriptentityplus.json.EntityScriptJson;
+import com.github.yuttyann.scriptentityplus.listener.CommandListener;
+import com.github.yuttyann.scriptentityplus.listener.EntityListener;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.World;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.plugin.PluginManager;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
+
+public final class ScriptEntity {
+
+    public static final String SBP_VERSION = "2.2.6";
+
+    private static final ScriptEntity INSTANCE = new ScriptEntity();
+
+    private ScriptEntity() {
+    }
+
+    public void onEnable() {
+        ScriptBlock scriptBlock = ScriptBlock.getInstance();
+        PluginManager manager = scriptBlock.getServer().getPluginManager();
+        if (Utils.isUpperVersion(scriptBlock.getDescription().getVersion(), SBP_VERSION)) {
+            SEFiles.register();
+            SEFiles.reload();
+
+            CacheJson.register(EntityScriptJson.class, EntityScriptJson::new);
+            CacheJson.loading(EntityScriptJson.class);
+
+            manager.registerEvents(new CommandListener(), scriptBlock);
+            manager.registerEvents(new EntityListener(), scriptBlock);
+
+            ItemAction.register(new ScriptConnection());
+
+            Bukkit.getWorlds().forEach(w -> w.getEntities().forEach(this::removeArmorStand));
+        } else {
+            scriptBlock.getLogger().info("ScriptEntityPlus integration requires ScriptBlockPlus " + SBP_VERSION + " or newer.");
+        }
+    }
+
+    public void onDisable() {
+        Bukkit.getWorlds().forEach(w -> w.getEntities().forEach(this::removeArmorStand));
+    }
+
+    public boolean removeArmorStand(@NotNull Entity entity) {
+        if (!(entity instanceof ArmorStand)) {
+            return false;
+        }
+        ArmorStand armorStand = (ArmorStand) entity;
+        if (armorStand.isSmall() && Objects.equals(armorStand.getCustomName(), "DeathScriptDummy")) {
+            armorStand.remove();
+            return true;
+        }
+        return false;
+    }
+
+    @NotNull
+    public ArmorStand createArmorStand(@NotNull Location location) {
+        World world = Objects.requireNonNull(location.getWorld());
+        ArmorStand armorStand = (ArmorStand) world.spawnEntity(location, EntityType.ARMOR_STAND);
+        armorStand.setInvulnerable(true);
+        armorStand.setGravity(false);
+        armorStand.setVisible(false);
+        armorStand.setSmall(true);
+        armorStand.setCustomName("DeathScriptDummy");
+        armorStand.setCustomNameVisible(false);
+        return armorStand;
+    }
+
+    @NotNull
+    public static ScriptEntity getInstance() {
+        return INSTANCE;
+    }
+
+    public static void dispatchCommand(@NotNull World world, @NotNull String command) {
+        CommandLog.action(world, () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command));
+    }
+}
