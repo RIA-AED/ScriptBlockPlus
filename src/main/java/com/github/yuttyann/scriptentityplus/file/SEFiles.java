@@ -21,6 +21,7 @@ import com.github.yuttyann.scriptblockplus.file.SBFile;
 import com.github.yuttyann.scriptblockplus.file.config.ConfigKeys;
 import com.github.yuttyann.scriptblockplus.script.option.BaseOption;
 import com.github.yuttyann.scriptblockplus.utils.FileUtils;
+import com.github.yuttyann.scriptentityplus.json.EntityScriptJson;
 import com.github.yuttyann.scriptentityplus.script.EntityScriptRead;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -57,6 +58,7 @@ public final class SEFiles implements Listener {
         if (scriptEntity.exists() && scriptEntity.isDirectory()) {
             FileUtils.move(scriptEntity, new SBFile(dataFolder, "json/entityscript"));
         }
+        EntityScriptJson.reloadExisting();
     }
 
     @SuppressWarnings("unchecked")

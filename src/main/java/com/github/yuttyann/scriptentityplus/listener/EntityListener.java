@@ -79,10 +79,10 @@ public class EntityListener implements Listener {
     }
 
     private void damageEvent(@NotNull Cancellable event, @NotNull Entity damager, @NotNull Entity entity, final double damage) {
-        EntityScriptJson entityScriptJson = EntityScriptJson.get(entity.getUniqueId());
-        if (!entityScriptJson.exists()) {
+        if (!EntityScriptJson.exists(entity.getUniqueId())) {
             return;
         }
+        EntityScriptJson entityScriptJson = EntityScriptJson.get(entity.getUniqueId());
         EntityScript info = entityScriptJson.load();
         if (info.isInvincible()) {
             event.setCancelled(true);
@@ -146,9 +146,8 @@ public class EntityListener implements Listener {
         if (type == EntityType.PLAYER) {
             return;
         }
-        EntityScriptJson scriptJson = EntityScriptJson.get(entity.getUniqueId());
-        if (scriptJson.exists()) {
-            scriptJson.deleteFile();
+        if (EntityScriptJson.exists(entity.getUniqueId())) {
+            EntityScriptJson.get(entity.getUniqueId()).deleteFile();
         }
     }
 
@@ -184,6 +183,9 @@ public class EntityListener implements Listener {
                 }
                 event.setCancelled(true);
             } else {
+                if (!EntityScriptJson.exists(entity.getUniqueId())) {
+                    return;
+                }
                 EntityScript entityScript = EntityScriptJson.get(entity.getUniqueId()).load();
                 if (entityScript.getScripts(ToolMode.NORMAL_SCRIPT).size() > 0) {
                     if (!entityScript.isProjectile()) {

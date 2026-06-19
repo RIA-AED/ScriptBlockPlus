@@ -312,7 +312,7 @@ public abstract class BaseJson<E extends BaseElement> extends SubElementMap<E> {
      * キャッシュが生成されていない場合のみ設定される。
      */
     private void keepCache() {
-        if (getStatus() == Status.NO_CACHE) {
+        if (getStatus() == null || getStatus() == Status.NO_CACHE) {
             this.status = Status.KEEP_CACHE;
         }
     }
@@ -368,6 +368,7 @@ public abstract class BaseJson<E extends BaseElement> extends SubElementMap<E> {
         } finally {
             file.delete();
             fileExists = false;
+            onDeleteFile();
         }
         return true;
     }
@@ -381,21 +382,30 @@ public abstract class BaseJson<E extends BaseElement> extends SubElementMap<E> {
             parent.mkdirs();
         }
         var elements = copyElements();
+        boolean saved = false;
         try (var writer = new JsonWriter(FileUtils.newBufferedWriter(file))) {
             fileExists = true;
             if (elementMap.size() < SBConfig.FORMAT_LIMIT.getValue()) {
                 writer.setIndent(jsonTag.indent());
             }
             GSON_HOLDER.getGson().toJson(elements, getCollectionType(), writer);
+            saved = true;
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         } finally {
+            if (saved) {
+                onSaveJson();
+            }
             if (jsonTag.temporary() && getStatus() == Status.KEEP_CACHE) {
                 Optional.ofNullable(JSON_CACHE.get(getClass())).ifPresent(i -> i.remove(getCacheId()));
                 clearCache();
             }
         }
     }
+
+    protected void onDeleteFile() { }
+
+    protected void onSaveJson() { }
 
     /**
      * エレメントのコレクションをコピーします。

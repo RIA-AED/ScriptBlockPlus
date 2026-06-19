@@ -54,6 +54,16 @@ public final class FileUtils {
         }
     }
 
+    public static boolean hasResource(@NotNull Plugin plugin, @NotNull String filePath) {
+        if (StringUtils.isEmpty(filePath)) {
+            return false;
+        }
+        if (File.separatorChar != '/') {
+            filePath = filePath.replace(File.separatorChar, '/');
+        }
+        return plugin.getClass().getClassLoader().getResource(filePath) != null;
+    }
+
     public static void copyFileFromPlugin(@NotNull Plugin plugin, @NotNull File targetFile, @NotNull String sourceFilePath) throws IOException {
         if (StringUtils.isEmpty(sourceFilePath)) {
             return;

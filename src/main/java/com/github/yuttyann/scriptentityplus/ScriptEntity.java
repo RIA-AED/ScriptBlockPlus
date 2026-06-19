@@ -53,6 +53,7 @@ public final class ScriptEntity {
             SEFiles.reload();
 
             CacheJson.register(EntityScriptJson.class, EntityScriptJson::new);
+            EntityScriptJson.reloadExisting();
             CacheJson.loading(EntityScriptJson.class);
 
             manager.registerEvents(new CommandListener(), scriptBlock);

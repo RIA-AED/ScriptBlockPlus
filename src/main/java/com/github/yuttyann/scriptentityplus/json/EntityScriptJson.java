@@ -20,17 +20,59 @@ import com.github.yuttyann.scriptblockplus.file.json.basic.SingleJson;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
-@JsonTag(path = "json/entityscript")
+@JsonTag(path = "json/entityscript", cachefileexists = true)
 public class EntityScriptJson extends SingleJson<EntityScript> {
+
+    private static final Set<UUID> EXISTING = ConcurrentHashMap.newKeySet();
+    private static volatile boolean loaded;
+    private final UUID uuid;
 
     public EntityScriptJson(@NotNull String name) {
         super(name, EntityScript::new);
+        this.uuid = UUID.fromString(name);
     }
 
     @NotNull
     public static EntityScriptJson get(@NotNull UUID uuid) {
         return newJson(EntityScriptJson.class, uuid.toString());
+    }
+
+    public static boolean exists(@NotNull UUID uuid) {
+        if (!loaded) {
+            reloadExisting();
+        }
+        return EXISTING.contains(uuid);
+    }
+
+    public static void reloadExisting() {
+        EXISTING.clear();
+        for (var name : getNames(EntityScriptJson.class)) {
+            try {
+                EXISTING.add(UUID.fromString(name.substring(0, name.length() - ".json".length())));
+            } catch (IllegalArgumentException ignored) { }
+        }
+        loaded = true;
+    }
+
+    public static void setExists(@NotNull UUID uuid, boolean exists) {
+        if (exists) {
+            EXISTING.add(uuid);
+        } else {
+            EXISTING.remove(uuid);
+        }
+    }
+
+    @Override
+    protected void onDeleteFile() {
+        setExists(uuid, false);
+    }
+
+    @Override
+    protected void onSaveJson() {
+        setExists(uuid, true);
     }
 }

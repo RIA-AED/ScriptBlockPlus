@@ -149,12 +149,11 @@ public class ScriptConnection extends ItemAction {
             return;
         }
         if (runItem.isSneaking()) {
-            EntityScriptJson entityScriptJson = EntityScriptJson.get(entity.get().getUniqueId());
-            if (!entityScriptJson.exists()) {
+            if (!EntityScriptJson.exists(entity.get().getUniqueId())) {
                 SBConfig.ERROR_SCRIPT_FILE_CHECK.send(sbPlayer);
                 return;
             }
-            entityScriptJson.deleteFile();
+            EntityScriptJson.get(entity.get().getUniqueId()).deleteFile();
             SEConfig.SCRIPT_REMOVE_ENTITY.replace(entity.get().getType().name()).send(sbPlayer);
         } else {
             ObjectMap objectMap = sbPlayer.getObjectMap();
@@ -186,13 +185,13 @@ public class ScriptConnection extends ItemAction {
         if (!entity.isPresent()) {
             return;
         }
+        if (!EntityScriptJson.exists(entity.get().getUniqueId())) {
+            SBConfig.ERROR_SCRIPT_FILE_CHECK.send(sbPlayer);
+            return;
+        }
         EntityScriptJson entityScriptJson = EntityScriptJson.get(entity.get().getUniqueId());
         EntityScript entityScript = entityScriptJson.load();
         if (runItem.isSneaking()) {
-            if (!entityScriptJson.exists()) {
-                SBConfig.ERROR_SCRIPT_FILE_CHECK.send(sbPlayer);
-                return;
-            }
             String uuid = entity.get().getUniqueId().toString();
             JsonBuilder builder = new JsonBuilder();
             JsonElement element = new JsonElement("Invincible", ChatColor.AQUA, ChatFormat.BOLD);

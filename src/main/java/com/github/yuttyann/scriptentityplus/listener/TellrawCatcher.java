@@ -53,8 +53,9 @@ class TellrawCatcher {
                         if (!UUID_PATTERN.matcher(split.get(1)).matches()) {
                             return;
                         }
-                        EntityScriptJson entityScriptJson = EntityScriptJson.get(UUID.fromString(split.get(1)));
-                        if (entityScriptJson.exists()) {
+                        var uuid = UUID.fromString(split.get(1));
+                        if (EntityScriptJson.exists(uuid)) {
+                            EntityScriptJson entityScriptJson = EntityScriptJson.get(uuid);
                             List<String> types = StringUtils.split(split.get(0), '=');
                             SettingType settingType = SettingType.get(types.get(0));
                             ButtonType buttonType = ButtonType.get(types.get(1));
