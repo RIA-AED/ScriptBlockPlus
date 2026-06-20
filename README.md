@@ -7,8 +7,8 @@ This branch is maintained by the RIA server.
 
 This branch keeps the upstream feature set and addon integration, but:
 - removes redstone script block support entirely
-- is adapted for newer versions and currently tested on `26.1.2`
-- uses JDK 25 for builds, while runtime Java requirements remain unchanged
+- is adapted for newer versions and currently tested on `1.21.4` and `26.1.2`
+- builds Java 11 bytecode for compatibility across supported server runtimes
 - includes performance fixes and memory overflow bug fixes
 - merges the official `ScriptEntityPlus` addon into the main plugin
 
@@ -45,7 +45,7 @@ However, it is not actively supported in general, and updates were stopped a lon
 **== Compatibility by version ==**
 | Plugin | Server | Java |
 |:---|:---|:---:|
-|**`2.4.1`**|**`1.9-26.1.2`**|**Java25**|
+|**`2.4.2`**|**`1.9-26.1.2`**|**Java11**|
 |`2.3.3`|`1.9-1.21.5`|**Java11**|
 |`2.3.0-2.3.2`|`1.9-1.21`|**Java11**|
 |`2.2.7-2.2.8`|`1.9-1.20.2`|**Java11**|
@@ -62,7 +62,7 @@ However, it is not actively supported in general, and updates were stopped a lon
 |`1.4.0-1.5.0`|`1.7.2-1.13.2`|**Java8**|
 |`1.0.0-1.3.3`|`1.7.2-1.13.2`|**Java7**|
 
-This fork has also been tested on `26.1.2`.
+This fork has also been tested on `1.21.4` and `26.1.2`.
 
 **== About version "1.13-1.13.1" ==**
 Because the server does not support **Java 9** or later, an **error can occur**.
