@@ -31,6 +31,7 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -148,21 +149,32 @@ public final class SettingGUI extends CustomGUI {
             getScriptJson(w).ifPresent(s -> w.getSBPlayer().getSBClipboard().ifPresent(b -> { b.paste(s.blockCoords, true); update(w, s); }));
         }));
 
-        window.setItem(SLOTS[5], new GUIItem(1, Material.NETHER_STAR, SBConfig.GUI_SETTING_TELEPORT.setColor(), null, (w, g, c) -> {
+        window.setItem(SLOTS[5], new GUIItem(1, Material.ENDER_PEARL, SBConfig.GUI_SETTING_TELEPORT.setColor(), null, (w, g, c) -> {
             getScriptJson(w).ifPresent(s -> w.getSBPlayer().toPlayer().teleport(s.blockCoords.toLocation(), TeleportCause.PLUGIN));
         }));
-        window.setItem(SLOTS[6], new GUIItem(1, Material.END_CRYSTAL, SBConfig.GUI_SETTING_EXECUTE.setColor(), null, (w, g, c) -> {
+        window.setItem(SLOTS[6], new GUIItem(1, ItemUtils.getMaterial("REDSTONE_TORCH", "REDSTONE_TORCH_ON"), SBConfig.GUI_SETTING_EXECUTE.setColor(), null, (w, g, c) -> {
             getScriptJson(w).ifPresent(s -> {
                 new ScriptRead(w.getSBPlayer(), s.blockCoords, s.scriptKey).read(0);
                 w.setItem(SLOTS[7], w.getItem(SLOTS[7]).setLore(s.createLore(w.getSBPlayer().toPlayer())));
             });
         }));
-        window.setItem(SLOTS[7], new GUIItem(1, Material.ENCHANTED_BOOK, SBConfig.GUI_SETTING_INFO.setColor(), null, (w, g, c) -> {
+
+        var infoItem = new GUIItem(1, ItemUtils.getMaterial("PLAYER_HEAD", "SKULL_ITEM"), SBConfig.GUI_SETTING_INFO.setColor(), null, (w, g, c) -> {
             getScriptJson(w).ifPresent(s -> update(w, s));
-        }));
+        });
+        var skull = infoItem.toBukkit();
+        var skullMeta = (SkullMeta) skull.getItemMeta();
+        if (V_1_12_1.isSupported()) {
+            skullMeta.setOwningPlayer(window.getSBPlayer().toOfflinePlayer());
+        } else {
+            skull.setDurability((short) 3);
+            skullMeta.setOwner(window.getSBPlayer().getName());
+        }
+        skull.setItemMeta(skullMeta);
+        window.setItem(SLOTS[7], infoItem);
 
         // AnvilGUI
-        window.setItem(SLOTS[2], new GUIItem(1, ItemUtils.getCommandMaterial(), SBConfig.GUI_SETTING_SCRIPT.setColor(), null, (w, g, c) -> {
+        window.setItem(SLOTS[2], new GUIItem(1, Material.BOOKSHELF, SBConfig.GUI_SETTING_SCRIPT.setColor(), null, (w, g, c) -> {
             if (c == ClickType.LEFT) {
                 getScriptJson(w).ifPresent(s -> w.setItem(SLOTS[2], g.setLore(selectScript(w.getSBPlayer(), s, 1))));
                 return;

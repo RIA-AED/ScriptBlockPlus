@@ -55,7 +55,7 @@ public class SpigotAccessor_v1_9 implements NativeAccessor {
     private final FieldStore f;
     private final MethodStore m;
     private final ConstructorStore c;
- 
+
     SpigotAccessor_v1_9() throws ReflectiveOperationException {
         // sendPacket
         field(LEGACY_PATH.getClass("EntityPlayer"))
@@ -161,7 +161,7 @@ public class SpigotAccessor_v1_9 implements NativeAccessor {
         construct(LEGACY_PATH.getClass("Vec3D"))
             .parameterTypes(double.class, double.class, double.class)
             .findFirst("Vec3D");
-    
+
         // newAnvilMenu
         construct(LEGACY_PATH.getClass("BlockPosition"))
             .parameterTypes(int.class, int.class, int.class)
@@ -178,12 +178,12 @@ public class SpigotAccessor_v1_9 implements NativeAccessor {
             .parameterTypes(LEGACY_PATH.getClass("PlayerInventory"), LEGACY_PATH.getClass("World"), LEGACY_PATH.getClass("BlockPosition"), LEGACY_PATH.getClass("EntityHuman"))
             .findFirst("ContainerAnvil");
 
-        // newMagmaCube
+        // newCubeEntity
         construct(LEGACY_PATH.getClass("EntityMagmaCube"))
             .parameterTypes(LEGACY_PATH.getClass("World"))
             .findFirst("EntityMagmaCube");
 
-        // newCraftMagmaCube
+        // newCraftCubeEntity
         construct(ENTITY.getClass("CraftMagmaCube"))
             .parameterTypes(CRAFTBUKKIT.getClass("CraftServer"), LEGACY_PATH.getClass("EntityMagmaCube"))
             .findFirst("CraftMagmaCube");
@@ -377,14 +377,14 @@ public class SpigotAccessor_v1_9 implements NativeAccessor {
 
     @Override
     @NotNull
-    public Object newMagmaCube(@NotNull Object serverLevel) throws ReflectiveOperationException {
+    public Object newCubeEntity(@NotNull Object serverLevel) throws ReflectiveOperationException {
         return c.newInstance("EntityMagmaCube", serverLevel);
     }
 
     @Override
     @NotNull
-    public Object newCraftMagmaCube(@NotNull Object magmaCube) throws ReflectiveOperationException {
-        return c.newInstance("CraftMagmaCube", Bukkit.getServer(), magmaCube);
+    public Object newCraftCubeEntity(@NotNull Object cubeEntity) throws ReflectiveOperationException {
+        return c.newInstance("CraftMagmaCube", Bukkit.getServer(), cubeEntity);
     }
 
     @Override

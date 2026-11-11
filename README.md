@@ -45,7 +45,10 @@ However, it is not actively supported in general, and updates were stopped a lon
 **== Compatibility by version ==**
 | Plugin | Server | Java |
 |:---|:---|:---:|
-|**`2.4.2`**|**`1.9-26.1.2`**|**Java11**|
+|**`2.4.3`**|**`1.9-26.2`**|**Java11**|
+|`2.4.2`|`1.9-26.1.2`|**Java11**|
+|`2.3.5`|`1.9-26.2`|**Java11**|
+|`2.3.4`|`1.9-1.21.8`|**Java11**|
 |`2.3.3`|`1.9-1.21.5`|**Java11**|
 |`2.3.0-2.3.2`|`1.9-1.21`|**Java11**|
 |`2.2.7-2.2.8`|`1.9-1.20.2`|**Java11**|
